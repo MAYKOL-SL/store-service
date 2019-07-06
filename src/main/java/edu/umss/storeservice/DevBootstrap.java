@@ -27,10 +27,10 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     private SubCategoryService subCategoryService;
 
     public DevBootstrap(CategoryService categoryService, ContractService contractService,
-            EmployeeService employeeService, ExpenseService expenseService,
-            FeatureInstanceService featureInstanceService, FeatureService featureService,
-            ItemInstanceService itemInstanceService, ItemService itemService, PositionService positionService,
-            SaleService saleService, SubCategoryService subCategoryService) {
+                        EmployeeService employeeService, ExpenseService expenseService,
+                        FeatureInstanceService featureInstanceService, FeatureService featureService,
+                        ItemInstanceService itemInstanceService, ItemService itemService, PositionService positionService,
+                        SaleService saleService, SubCategoryService subCategoryService) {
         this.categoryService = categoryService;
         this.contractService = contractService;
         this.employeeService = employeeService;
@@ -96,6 +96,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
                         "esfuerzo. Modelo L1-20DT, Con Rotocultor, Diesel 4x4, 20 HP, Con Pala.");
         saveItemInstance(tractorKubota20, false);
 
+
         // motocultor Item
         Item motocultor = saveItem(motocultorSubCategory, "MOT-M-3", "Motocultor yanmar 250",
                 "Motocultor útil para arado en superficies de dificil acceso, con espacios reducidos, para " +
@@ -136,6 +137,8 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         itemInstance.setFeatured(featured);
         itemInstance.setItem(tractorKubota10);
         itemInstanceService.save(itemInstance);
+
+        saveExpense(itemInstance);
     }
 
     private Item saveItem(SubCategory tractorSubCategory, String code, String name, String description) {
@@ -147,4 +150,9 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         return itemService.save(item);
     }
 
+    private void saveExpense(ItemInstance instance) {
+        Expense expenseInstance = new Expense();
+        expenseInstance.setItemInstance(instance);
+        expenseService.save(expenseInstance);
+    }
 }
