@@ -5,11 +5,13 @@
 package edu.umss.storeservice.controller;
 
 import edu.umss.storeservice.dto.ItemInstanceDto;
+import edu.umss.storeservice.dto.ItemInstanceInput;
 import edu.umss.storeservice.model.ItemInstance;
 import edu.umss.storeservice.service.GenericService;
 import edu.umss.storeservice.service.ItemInstanceService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/iteminstances")
@@ -23,5 +25,10 @@ public class ItemInstanceController extends GenericController<ItemInstance, Item
     @Override
     protected GenericService getService() {
         return service;
+    }
+
+    @PutMapping(value = "/updateiteminstance/{id}")
+    public ItemInstance updateItemInstance(@PathVariable("id") Long id,@RequestBody ItemInstanceInput input) throws IOException {
+        return service.uploadItemInstance(id, input);
     }
 }
