@@ -26,4 +26,10 @@ public class ItemServiceImpl extends GenericServiceImpl<Item> implements ItemSer
     public void setImage(Item itemPersisted, Byte[] bytes) {
         itemPersisted.setImage(bytes);
     }
+
+    public void deleteImage(Long id) {
+        Item item = repository.findItem(id);
+        item.setImage(null);
+        repository.save(item);
+    }
 }
