@@ -32,4 +32,9 @@ public class FeatureController extends GenericController<Feature, FeatureDto> {
     public FeatureInstance updateFeature(@PathVariable("id") Long id, @RequestBody FeatureInput input) throws IOException {
         return service.uploadFeature(id, input);
     }
+
+    @GetMapping(value = "/getFeature/{id}")
+    public FeatureInstance getFeature(@PathVariable("id") Long id) throws IOException {
+        return service.getFeature(id);
+    }
 }

@@ -10,6 +10,8 @@ import edu.umss.storeservice.model.FeatureInstance;
 
 public interface FeatureService extends GenericService<Feature> {
     FeatureInstance uploadFeature(Long id, FeatureInput instance);
+
+    FeatureInstance getFeature(Long id);
 }
 
     
