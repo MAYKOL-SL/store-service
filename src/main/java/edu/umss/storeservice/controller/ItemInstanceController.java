@@ -4,6 +4,7 @@
 
 package edu.umss.storeservice.controller;
 
+import edu.umss.storeservice.dto.CantidadInput;
 import edu.umss.storeservice.dto.ItemInstanceDto;
 import edu.umss.storeservice.dto.ItemInstanceInput;
 import edu.umss.storeservice.model.ItemInstance;
@@ -30,5 +31,10 @@ public class ItemInstanceController extends GenericController<ItemInstance, Item
     @PutMapping(value = "/updateiteminstance/{id}")
     public ItemInstance updateItemInstance(@PathVariable("id") Long id,@RequestBody ItemInstanceInput input) throws IOException {
         return service.uploadItemInstance(id, input);
+    }
+
+    @PutMapping(value = "/updatecantidad/{id}")
+    public ItemInstance updateCantidad(@PathVariable("id") Long id, @RequestBody CantidadInput input) throws IOException {
+        return service.updateCantidad(id, input);
     }
 }

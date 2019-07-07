@@ -4,6 +4,7 @@
 
 package edu.umss.storeservice.service;
 
+import edu.umss.storeservice.dto.CantidadInput;
 import edu.umss.storeservice.dto.ItemInstanceInput;
 import edu.umss.storeservice.model.Item;
 import edu.umss.storeservice.model.ItemInstance;
@@ -39,8 +40,20 @@ public class ItemInstanceServiceImpl extends GenericServiceImpl<ItemInstance> im
         itemInstance.setPrice(instance.getPrice());
         itemInstance.setUpdatedAt(new Date());
         itemInstance.setVersion(instance.getVersion());
+        itemInstance.setCantidad(instance.getCantidad());
 
         ItemInstance result = repository.save(itemInstance);
+        return result;
+    }
+
+    public ItemInstance updateCantidad(Long id, CantidadInput input) {
+        Optional<Item> item = itemRepository.findById(id);
+        ItemInstance itemInstance = repository.findItemInstance(item);
+
+        itemInstance.setCantidad(input.getCantidad());
+
+        ItemInstance result = repository.save(itemInstance);
+
         return result;
     }
 }
