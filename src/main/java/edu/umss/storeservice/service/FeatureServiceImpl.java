@@ -52,4 +52,11 @@ public class FeatureServiceImpl extends GenericServiceImpl<Feature> implements F
 
         return featureInstance;
     }
+
+    public FeatureInstance getFeature(Long id) {
+        Optional<Item> item = itemRepository.findById(id);
+        FeatureInstance featureInstance = featureInstanceRepository.findFeatureInstance(item);
+
+        return featureInstance;
+    }
 }

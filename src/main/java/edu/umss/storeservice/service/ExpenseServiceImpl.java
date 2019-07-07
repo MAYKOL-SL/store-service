@@ -50,6 +50,11 @@ public class ExpenseServiceImpl extends GenericServiceImpl<Expense> implements E
         expenseType.setDescription(instance.getExpenseType());
         ExpenseType result = expenseTypeRepository.save(expenseType);
 
+        if (itemInstance.getPrice() != null && expense.getValue() != null) {
+            itemInstance.setUtilidad(itemInstance.getPrice() - expense.getValue());
+            itemInstanceRepository.save(itemInstance);
+        }
+
         return result;
     }
 }
