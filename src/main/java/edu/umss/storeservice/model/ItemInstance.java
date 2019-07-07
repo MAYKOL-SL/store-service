@@ -23,6 +23,7 @@ public class ItemInstance extends ModelBase<ItemInstanceDto> {
     // todo estados AVAILABLE, SOLD, MAINTENANCE, ON_TRANSPORTATION
     // private ItemInstanceState itemInstanceState;
     // todo agregar totalCost
+    private Double utilidad;
 
     public Item getItem() {
         return item;
@@ -61,5 +62,13 @@ public class ItemInstance extends ModelBase<ItemInstanceDto> {
         super.toDomain(element, mapper);
         setItem((Item) new Item().toDomain(element.getItemDto(), mapper));
         return this;
+    }
+
+    public Double getUtilidad() {
+        return utilidad;
+    }
+
+    public void setUtilidad(Double utilidad) {
+        this.utilidad = utilidad;
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
+import java.util.Date;
 
 @Component
 public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> {
@@ -25,12 +26,14 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     private PositionService positionService;
     private SaleService saleService;
     private SubCategoryService subCategoryService;
+    private ExpenseTypeService expenseTypeService;
 
     public DevBootstrap(CategoryService categoryService, ContractService contractService,
                         EmployeeService employeeService, ExpenseService expenseService,
                         FeatureInstanceService featureInstanceService, FeatureService featureService,
                         ItemInstanceService itemInstanceService, ItemService itemService, PositionService positionService,
-                        SaleService saleService, SubCategoryService subCategoryService) {
+                        SaleService saleService, SubCategoryService subCategoryService,
+                        ExpenseTypeService expenseTypeService) {
         this.categoryService = categoryService;
         this.contractService = contractService;
         this.employeeService = employeeService;
@@ -42,6 +45,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         this.positionService = positionService;
         this.saleService = saleService;
         this.subCategoryService = subCategoryService;
+        this.expenseTypeService = expenseTypeService;
     }
 
     @Override
@@ -83,6 +87,31 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         montacargaSubCategory.setCode("MON");
         montacargaSubCategory.setName("MONTACARGA");
         subCategoryService.save(montacargaSubCategory);
+
+        //FEATURE
+        Feature featureTractorKubota10 = new Feature();
+        featureTractorKubota10.setName("Feature tractor Kubota 10");
+        featureTractorKubota10.setCreatedAt(new Date());
+        featureTractorKubota10.setVersion(0);
+        featureService.save(featureTractorKubota10);
+
+        Feature featureTractorKubota20 = new Feature();
+        featureTractorKubota20.setName("Feature tractor Kubota 20");
+        featureTractorKubota20.setCreatedAt(new Date());
+        featureTractorKubota20.setVersion(0);
+        featureService.save(featureTractorKubota20);
+
+        Feature featureMotocultor = new Feature();
+        featureMotocultor.setName("Feature motocultor");
+        featureMotocultor.setCreatedAt(new Date());
+        featureMotocultor.setVersion(0);
+        featureService.save(featureMotocultor);
+
+        Feature featureMontacargaMitsubishi2T = new Feature();
+        featureMontacargaMitsubishi2T.setName("Feature Monta carga Mitsubishi 2T");
+        featureMontacargaMitsubishi2T.setCreatedAt(new Date());
+        featureMontacargaMitsubishi2T.setVersion(0);
+        featureService.save(featureMontacargaMitsubishi2T);
 
         // tractorKubota10 Item
         Item tractorKubota10 = saveItem(tractorSubCategory, "TRACTOR-K-10", "Tractor Kubota 10.5 Hp",
@@ -130,6 +159,35 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         john.getContracts().add(contract);
         employeeService.save(john);
         //contractService.save(contract);
+
+        //FEATURE INTANCE CREATE
+        FeatureInstance featureInstance1 = new FeatureInstance();
+        featureInstance1.setItem(tractorKubota10);
+        featureInstance1.setFeature(featureTractorKubota10);
+        featureInstance1.setValue("FEATURE NEW TRACTOR 10");
+        featureInstance1.setCreatedAt(new Date());
+        featureInstanceService.save(featureInstance1);
+
+        FeatureInstance featureInstance2 = new FeatureInstance();
+        featureInstance2.setItem(tractorKubota20);
+        featureInstance2.setFeature(featureTractorKubota20);
+        featureInstance2.setValue("FEATURE NEW TRACTO 20");
+        featureInstance2.setCreatedAt(new Date());
+        featureInstanceService.save(featureInstance2);
+
+        FeatureInstance featureInstance3 = new FeatureInstance();
+        featureInstance3.setItem(montacargaMitsubishi2T);
+        featureInstance3.setFeature(featureMontacargaMitsubishi2T);
+        featureInstance3.setValue("FEATURE NEW MONTACARGA");
+        featureInstance3.setCreatedAt(new Date());
+        featureInstanceService.save(featureInstance3);
+
+        FeatureInstance featureInstance4 = new FeatureInstance();
+        featureInstance4.setItem(motocultor);
+        featureInstance4.setFeature(featureMotocultor);
+        featureInstance4.setValue("FEATURE NEW MOTOCULTOR");
+        featureInstance4.setCreatedAt(new Date());
+        featureInstanceService.save(featureInstance4);
     }
 
     private void saveItemInstance(Item tractorKubota10, boolean featured) {
@@ -147,6 +205,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         item.setName(name);
         item.setDescription(description);
         item.setSubCategory(tractorSubCategory);
+
         return itemService.save(item);
     }
 
@@ -154,5 +213,13 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         Expense expenseInstance = new Expense();
         expenseInstance.setItemInstance(instance);
         expenseService.save(expenseInstance);
+
+        saveExpenseType(expenseInstance);
+    }
+
+    private void saveExpenseType(Expense expense) {
+        ExpenseType expenseType = new ExpenseType();
+        expenseType.setExpense(expense);
+        expenseTypeService.save(expenseType);
     }
 }

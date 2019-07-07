@@ -6,12 +6,10 @@ package edu.umss.storeservice.service;
 
 import edu.umss.storeservice.dto.ExpenseInput;
 import edu.umss.storeservice.model.Expense;
+import edu.umss.storeservice.model.ExpenseType;
 import edu.umss.storeservice.model.Item;
 import edu.umss.storeservice.model.ItemInstance;
-import edu.umss.storeservice.repository.ExpenseRepository;
-import edu.umss.storeservice.repository.GenericRepository;
-import edu.umss.storeservice.repository.ItemInstanceRepository;
-import edu.umss.storeservice.repository.ItemRepository;
+import edu.umss.storeservice.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,12 +20,16 @@ public class ExpenseServiceImpl extends GenericServiceImpl<Expense> implements E
     private final ItemRepository itemRepository;
     private final ItemInstanceRepository itemInstanceRepository;
     private final ExpenseRepository expenseRepository;
+    private final ExpenseTypeRepository expenseTypeRepository;
 
-
-    public ExpenseServiceImpl(ItemInstanceRepository itemInstanceRepository, ItemRepository itemRepository, ExpenseRepository expenseRepository) {
+    public ExpenseServiceImpl(ItemInstanceRepository itemInstanceRepository,
+                              ItemRepository itemRepository,
+                              ExpenseRepository expenseRepository,
+                              ExpenseTypeRepository expenseTypeRepository) {
         this.itemInstanceRepository = itemInstanceRepository;
         this.itemRepository = itemRepository;
         this.expenseRepository = expenseRepository;
+        this.expenseTypeRepository = expenseTypeRepository;
     }
 
     @Override
@@ -35,17 +37,19 @@ public class ExpenseServiceImpl extends GenericServiceImpl<Expense> implements E
         return expenseRepository;
     }
 
-    public Expense uploadExpense(Long id, ExpenseInput instance) {
+    public ExpenseType uploadExpense(Long id, ExpenseInput instance) {
         Optional<Item> item = itemRepository.findById(id);
         ItemInstance itemInstance = itemInstanceRepository.findItemInstance(item);
         Expense expense = expenseRepository.findExpense(itemInstance);
+        ExpenseType expenseType = expenseTypeRepository.findExpenseType(expense);
 
         expense.setDescription(instance.getDescription());
         expense.setValue(instance.getValue());
-        expense.setExpenseType(instance.getExpenseType());
+        expenseRepository.save(expense);
 
-        Expense expenseInstance = expenseRepository.save(expense);
+        expenseType.setDescription(instance.getExpenseType());
+        ExpenseType result = expenseTypeRepository.save(expenseType);
 
-        return expenseInstance;
+        return result;
     }
 }

@@ -7,14 +7,11 @@ package edu.umss.storeservice.model;
 import edu.umss.storeservice.dto.ExpenseDto;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Expense extends ModelBase<ExpenseDto> {
-    @Enumerated(EnumType.STRING)
-    private ExpenseType expenseType;
+
     private Long value;
     private String description;
 
@@ -27,14 +24,6 @@ public class Expense extends ModelBase<ExpenseDto> {
 
     public void setItemInstance(ItemInstance itemInstance) {
         this.itemInstance = itemInstance;
-    }
-
-    public ExpenseType getExpenseType() {
-        return expenseType;
-    }
-
-    public void setExpenseType(ExpenseType expenseType) {
-        this.expenseType = expenseType;
     }
 
     public Long getValue() {

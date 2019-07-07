@@ -10,10 +10,10 @@ import edu.umss.storeservice.model.ItemInstance;
 
 public class ExpenseDto extends DtoBase<Expense> {
 
-    private ExpenseType expenseType;
     private Long value;
     private String description;
     private ItemInstance itemInstance;
+    private ExpenseType expenseType;
 
     public ExpenseType getExpenseType() {
         return expenseType;
