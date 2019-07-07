@@ -31,8 +31,13 @@ public class ItemController extends GenericController<Item, ItemDto> {
     @PostMapping(value = "/{id}/image")
     @Override
     public ResponseEntity uploadImage(@RequestParam("file") MultipartFile[] uploadingFiles,
-            @PathVariable("id") Long id) throws IOException {
+                                      @PathVariable("id") Long id) throws IOException {
         return super.uploadImage(uploadingFiles, id);
     }
 
+    @DeleteMapping(value = "/{id}/deleteImage")
+    public ResponseEntity deleteImage(@PathVariable("id") Long id) throws IOException {
+        service.deleteImage(id);
+        return ResponseEntity.ok("Image delete");
+    }
 }
