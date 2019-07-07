@@ -23,6 +23,24 @@ public class ItemInstanceDto extends DtoBase<ItemInstance> {
     private Boolean featured;
     private String identifier;
     private ItemDto itemDto;
+    private Double utilidad;
+    private Double cantidad;
+
+    public Double getUtilidad() {
+        return utilidad;
+    }
+
+    public void setUtilidad(Double utilidad) {
+        this.utilidad = utilidad;
+    }
+
+    public Double getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Double cantidad) {
+        this.cantidad = cantidad;
+    }
 
     public String getName() {
         return name;
