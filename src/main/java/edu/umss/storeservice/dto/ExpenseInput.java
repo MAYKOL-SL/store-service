@@ -1,22 +1,20 @@
 package edu.umss.storeservice.dto;
 
-import edu.umss.storeservice.model.ExpenseType;
-
 /**
  * @author: Miguel A. Quispe Santos
  */
 
 public class ExpenseInput {
 
-    private ExpenseType expenseType;
+    private String expenseType;
     private Long value;
     private String description;
 
-    public ExpenseType getExpenseType() {
+    public String getExpenseType() {
         return expenseType;
     }
 
-    public void setExpenseType(ExpenseType expenseType) {
+    public void setExpenseType(String expenseType) {
         this.expenseType = expenseType;
     }
 

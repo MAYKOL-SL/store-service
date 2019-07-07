@@ -8,9 +8,7 @@ import edu.umss.storeservice.dto.ItemDto;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import java.util.Set;
 
 @Entity
 public class Item extends ModelBase<ItemDto> {
@@ -24,8 +22,8 @@ public class Item extends ModelBase<ItemDto> {
     private String description;
     // todo crear una entidad inventory con item y quantity
 
-    @OneToMany
-    private Set<FeatureInstance> featureInstances;
+//    @OneToMany
+//    private Set<FeatureInstance> featureInstances;
 
     //todo mover a otra entidad para soportar muchas imagenes
     @Lob
@@ -82,13 +80,6 @@ public class Item extends ModelBase<ItemDto> {
         this.year = year;
     }
 
-    public Set<FeatureInstance> getFeatureInstances() {
-        return featureInstances;
-    }
-
-    public void setFeatureInstances(Set<FeatureInstance> featureInstances) {
-        this.featureInstances = featureInstances;
-    }
 
     public String getCapacityUnit() {
         return capacityUnit;
